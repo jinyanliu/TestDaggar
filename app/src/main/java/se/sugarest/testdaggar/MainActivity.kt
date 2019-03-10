@@ -33,13 +33,13 @@ class MainActivity : AppCompatActivity() {
 open class Bag {
     @Provides
     @Choose(LOVE)
-    fun sayLoveDagger2(): Info {
+    open fun sayLoveDagger2(): Info {
         return Info("I Love You")
     }
 
     @Provides
     @Choose(HELLO)
-    fun sayHelloDagger2(): Info {
+    open fun sayHelloDagger2(): Info {
         return Info("Hello Dagger 2")
     }
 }
