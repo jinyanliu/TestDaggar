@@ -3,6 +3,8 @@ package se.sugarest.testdaggar
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import dagger.Component
+import dagger.Module
+import dagger.Provides
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -18,11 +20,17 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@Component
-interface MagicBox {
-    fun poke(app: MainActivity)
+@Module
+class Bag {
+    @Provides
+    fun sayLoveDagger2(): Info {
+        return Info("Love Dagger 2")
+    }
 }
 
-class Info @Inject constructor() {
-    val text = "Hello Dagger 2"
+class Info(val text: String)
+
+@Component(modules = [Bag::class])
+interface MagicBox {
+    fun poke(app: MainActivity)
 }
