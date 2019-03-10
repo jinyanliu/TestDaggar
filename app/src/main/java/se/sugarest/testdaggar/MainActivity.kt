@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import javax.inject.Named
+import javax.inject.Qualifier
 
 const val LOVE = "Love"
 const val HELLO = "Hello"
@@ -15,10 +15,10 @@ const val HELLO = "Hello"
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    @field:Named(LOVE)
+    @field:Choose(LOVE)
     lateinit var infoLove: Info
     @Inject
-    @field:Named(HELLO)
+    @field:Choose(HELLO)
     lateinit var infoHello: Info
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +30,15 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Module
-class Bag {
+open class Bag {
     @Provides
-    @Named(LOVE)
+    @Choose(LOVE)
     fun sayLoveDagger2(): Info {
-        return Info("Love Dagger 2")
+        return Info("I Love You")
     }
 
     @Provides
-    @Named(HELLO)
+    @Choose(HELLO)
     fun sayHelloDagger2(): Info {
         return Info("Hello Dagger 2")
     }
@@ -50,3 +50,8 @@ class Info(val text: String)
 interface MagicBox {
     fun poke(app: MainActivity)
 }
+
+@Qualifier
+@MustBeDocumented
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class Choose(val value: String = "")
